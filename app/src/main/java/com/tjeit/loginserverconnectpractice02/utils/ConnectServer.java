@@ -11,6 +11,7 @@ import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -62,6 +63,53 @@ public class ConnectServer {
 
                     if(handler != null) {
 //                        화면에서 처리하는 코드가 있으면 실행시켜줌
+                        handler.onResponse(json);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+//    내정보 가져오기
+    public static void getRequestMeInfo(Context context, String token, final JsonResponseHandler handler) {
+//        URL설정 (목적지 설정)
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL+"/v2/me_info").newBuilder();
+
+//        ※ GET, DELETE메소드는 필요 파라미터를 URL에 담아줘야함.
+//           이담는 과정을 쉽게 하려고 urlBuilder를 사용.
+
+//        실제로 서버에 접근하는 완성된 url
+        String requestURL = urlBuilder.build().toString();
+
+//        완성된 url로 접근하는 request를 생성.
+        Request request = new Request.Builder()
+                .header("X-Http-Token", token)
+                .url(requestURL) /* post등의 메소드를 안쓰면 , 기본적으로 GET */
+                .build();
+
+//         만들어진 Request를 실제로 서버에 요청.
+        OkHttpClient client = new OkHttpClient();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseContent = response.body().string();
+
+                Log.d("서버 응답 내용", responseContent);
+
+                try {
+//                받아온 응답을 JSON 객체로 변환
+                    JSONObject json = new JSONObject(responseContent);
+
+                    if(handler != null) {
                         handler.onResponse(json);
                     }
                 } catch (JSONException e) {
