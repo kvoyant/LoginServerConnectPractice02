@@ -1,6 +1,7 @@
 package com.tjeit.loginserverconnectpractice02;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,6 +64,13 @@ public class LoginActivity extends BaseActivity {
 //                                            로그인 성공 토큰값을 SharedPreference에 저장
                                             ContextUtil.setUserToken(mContext, token);
                                         }
+
+//                                        사용자 토큰 전달(메인액티비티로..)
+                                        Intent intent = new Intent(mContext, MainActivity.class);
+                                        intent.putExtra("userToken", token);
+                                        startActivity(intent);
+                                        finish();
+
                                     }
                                     else {
 //                                        로그인 실패. AlertDialog
