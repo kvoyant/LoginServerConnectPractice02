@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.tjeit.loginserverconnectpractice02.databinding.ActivityLoginBinding;
 import com.tjeit.loginserverconnectpractice02.utils.ConnectServer;
+import com.tjeit.loginserverconnectpractice02.utils.ContextUtil;
 
 import org.json.JSONObject;
 
@@ -29,6 +30,9 @@ public class LoginActivity extends BaseActivity {
                 String inputId = act.loginEdt.getText().toString();
                 String inputPw = act.loginPwdEdt.getText().toString();
 
+//                1-1 .입력받은 ID를 SharedPreference에 저장.
+                ContextUtil.setUserInputId(mContext, inputId);
+
 //                2.받아온 아이디와 비번이 정말로 올바른 회원인지? 검사
 //                  아이디/비번이 모두 동일한 사람이 회원 명부에 있는지? 검사.
 //                test123 / test123
@@ -47,7 +51,9 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+        String saveUserId = ContextUtil.getUserInputId(mContext);
 
+        act.loginEdt.setText(saveUserId);
     }
 
     @Override
