@@ -3,6 +3,7 @@ package com.tjeit.loginserverconnectpractice02;
 import android.app.AlertDialog;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.tjeit.loginserverconnectpractice02.databinding.ActivityLoginBinding;
@@ -86,6 +87,9 @@ public class LoginActivity extends BaseActivity {
         String saveUserId = ContextUtil.getUserInputId(mContext);
 
         act.loginEdt.setText(saveUserId);
+
+        String savedToken = ContextUtil.getUserToken(mContext);
+        Log.d("저장된 토큰값",String.format("토큰값 : %s",savedToken));
     }
 
     @Override
