@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.tjeit.loginserverconnectpractice02.databinding.ActivityMainBinding;
+import com.tjeit.loginserverconnectpractice02.utils.ConnectServer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends BaseActivity {
 
@@ -32,6 +36,33 @@ public class MainActivity extends BaseActivity {
         Log.d("사용자토큰값", token);
 
 //        받아온 토큰을 가지고 /v2/me_info API 호출, 사용자 데이터 표시
+        ConnectServer.getRequestMeInfo(mContext, token, new ConnectServer.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            int code = json.getInt("code");
+
+                            if(code == 200) {
+//                                정상수신
+                                JSONObject data = json.getJSONObject("data");
+
+                            }
+                            else {
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+
+            }
+        });
     }
 
     @Override
