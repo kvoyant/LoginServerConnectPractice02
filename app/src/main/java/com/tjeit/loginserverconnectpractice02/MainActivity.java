@@ -1,7 +1,6 @@
 package com.tjeit.loginserverconnectpractice02;
 
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -49,6 +48,21 @@ public class MainActivity extends BaseActivity {
                             if(code == 200) {
 //                                정상수신
                                 JSONObject data = json.getJSONObject("data");
+                                JSONObject user = data.getJSONObject("user");
+
+//                                프사경로
+                                String profile_image = user.getString("profile_image");
+//                                사용자 이름
+                                String name = user.getString("name");
+//                                보유금액
+                                int balance = user.getInt("balance");
+//                                은행로고
+                                JSONObject bank_code = user.getJSONObject("bank_code");
+                                String logo = bank_code.getString("logo");
+//                                은행이름
+                                String bankName  = bank_code.getString("name");
+//                                계좌번호
+                                String billing_account = user.getString("billing_account");
 
                             }
                             else {
